@@ -1,10 +1,15 @@
 package com.org.demo.controller;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.org.demo.dto.user.UserCreateRequest;
+import com.org.demo.dto.user.UserResponse;
+import com.org.demo.entity.User;
+import com.org.demo.mapper.UserMapper;
+import com.org.demo.service.UserService;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -15,13 +20,27 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/me")
-    public ResponseEntity<?> getMyProfile(){
-        return ResponseEntity.ok().build();
+    //create user
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public UserResponse createUser(@Valid @RequestBody UserCreateRequest request){
+        User user = UserMapper.toEntity(request);
+        User savedUser = userService.createUser(user);
+        return UserMapper.toResponse(savedUser);
     }
-
+    //get user by id
     @GetMapping("/{id}")
-    public ResponseEntity<?> getUserProfile(@PathVariable Long id){
-        return ResponseEntity.ok().build();
+    public UserResponse getUserById(@PathVariable Long id){
+        return UserMapper.toResponse(
+                userService.getUserById(id)
+        );
+    }
+    //list all users
+    @GetMapping
+    public List<UserResponse> getAllUsers(){
+        return userService.getAllUsers()
+                .stream()
+                .map(UserMapper::toResponse)
+                .toList();
     }
 }
