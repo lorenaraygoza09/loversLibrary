@@ -1,15 +1,46 @@
 package com.org.demo.service.impl;
 
+import com.org.demo.entity.User;
+import com.org.demo.repository.UserRepository;
 import com.org.demo.service.UserService;
 
+import java.util.List;
+
 public class UserServiceImpl implements UserService {
-    @Override
-    public Object getMyProfile() {
-        return null;
+
+    private final UserRepository repository;
+    //constructor
+    public UserServiceImpl(UserRepository repository) {
+        this.repository = repository;
     }
 
+    //create user
     @Override
-    public Object getUserProfile() {
-        return null;
+    public User createUser(User user) {
+        //validation before saving
+        if (repository.existsByUsername(user.getUsername())){
+            throw new RuntimeException("Username already exists.");
+        }
+         if (repository.existsByEmail(user.getEmail())){
+             throw new RuntimeException("Email already exists");
+         }
+         return repository.save(user);
+    }
+    //find user by id
+    @Override
+    public User getUserById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+    //find user by username
+    @Override
+    public User getUserByUsername(String username) {
+        return repository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Username not found"));
+    }
+    //list all users
+    @Override
+    public List<User> getAllUsers() {
+        return repository.findAll();
     }
 }

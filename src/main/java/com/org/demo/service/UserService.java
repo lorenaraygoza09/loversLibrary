@@ -1,7 +1,15 @@
 package com.org.demo.service;
 
-public interface UserService {
-    Object getMyProfile();
+import com.org.demo.entity.User;
 
-    Object getUserProfile();
+import java.util.List;
+
+public interface UserService {
+   User createUser(User user);
+
+   User getUserById(Long id);
+
+   User getUserByUsername(String username);
+
+   List<User> getAllUsers();
 }
