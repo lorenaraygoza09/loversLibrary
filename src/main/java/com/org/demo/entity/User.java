@@ -1,9 +1,11 @@
 package com.org.demo.entity;
 
 import jakarta.persistence.*;
-import javax.management.relation.Role;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import com.org.demo.entity.Role;
 
 @Entity
 @Table(name = "users")
@@ -15,7 +17,7 @@ public class User {
     @Column(nullable = false, unique = true)
     private String username;
 
-    @Column (nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)

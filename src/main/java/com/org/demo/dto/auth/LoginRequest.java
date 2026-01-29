@@ -1,17 +1,11 @@
-package com.org.demo.dto.request;
+package com.org.demo.dto.auth;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
 
-public class RegisterRequest {
-    @Getter
+public class LoginRequest {
     @NotBlank
     private String username;
 
-    @NotBlank
-    @Email
-    private String email;
     @NotBlank
     private String password;
 
@@ -21,14 +15,6 @@ public class RegisterRequest {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getPassword() {

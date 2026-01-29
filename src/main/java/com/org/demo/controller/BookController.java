@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/books")
+@RequestMapping("/api/books")
 public class BookController {
     private final BookService bookService;
 
